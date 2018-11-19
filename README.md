@@ -1,10 +1,8 @@
 # New Relic Shared Dashboards
 Whether it’s to ensure customers apps are running smoothly, or tracking the velocity of deployments, dashboards tell the story of your business. We want to make it easy for New Relic developers to learn from each other and share their dashboards. We've created a topic in our community to discuss best practices, new ideas, and answer any questions you have about getting more from you data! 
 
-```
-### Share The Dashboard Love -- You Could Win an Apple Watch!
-We want to spread the dashboard love by encouraging you to share the chart queries and dashboards that tell that story. On November 26th, 2018, New Relic will kick off our [Shared Dashboards contest!](https://discuss.newrelic.com/t/shared-dashboards-contest-add-your-queries-here/60634) You’ll have two weeks to share your most useful queries, Insights charts, and your most awesome dashboards.
-```
+> ### Share The Dashboard Love -- You Could Win an Apple Watch!
+> We want to spread the dashboard love by encouraging you to share the chart queries and dashboards that tell that story. On November 26th, 2018, New Relic will kick off our [Shared Dashboards contest!](https://discuss.newrelic.com/t/shared-dashboards-contest-add-your-queries-here/60634) You’ll have two weeks to share your most useful queries, Insights charts, and your most awesome dashboards.
 
 
 ## Using the Shared Dashboard Collection
