@@ -11,7 +11,7 @@ For the most part, each of these dashboards will have a matching entry in the [S
 * We are experimenting with using Postman(https://www.getpostman.com/) as a way to share examples of using the New Relic API. Import the [Postman collection](https://raw.githubusercontent.com/newrelic/shareddashboards/master/Shared%20Dashboard%20Collection.postman_collection.json?token=AAf3hDZrtjYETiOe85Axe2opeTtPJoseks5b_B3VwA%3D%3D) from this repository. _We would welcome your feedback to learn if you find using Postman helpful._ 
 Note: It's not uncommon for dashboards to rely on things specific to an environment, e.g. custom attribute, appname, etc. We'll do our best to make sure that you are aware of any dependencies. If you have any questions, you can post them on the dashboard's community page. 
 
-## Contributing Your Own
+## Contributing Your Own Dashboards
 It would be awesome if you would share your dashboards with other New Relic developers. You can do this in a number of ways.
 * Create a new shared dashboard discussion in the community [here](https://discuss.newrelic.com/c/build-on-new-relic/shared-dashboards). *Note: If you do this between November 26th and December 9th 2018, you could be eligable to win an Apple watch*
 * Update the Postman collection and issue a pull request. 
