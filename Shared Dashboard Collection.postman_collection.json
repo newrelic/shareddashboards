@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "b0ef9ce9-3015-435b-a171-0c1c5074a7bb",
+		"name": "Shared Dashboard Collection",
+		"description": "Are you Data Nerd? If so, check out this postman collection of helpful API calls.\n\nHave fun!",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Shared Dashboard Contest - Dashboard of the Day",
+			"item": [
+				{
+					"name": "All Widget Types",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"title\": \"Browser Dashboard - Time to First Byte (TTFB)\",\n    \"description\": null,\n    \"icon\": \"bar-chart\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [{\n        \"account_id\": {{account_id}},\n        \"visualization\": \"markdown\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"source\": \"# Motivation\\n---\\n\\nThis dashboard highlights granular page load details set from the [Navigation Timing API](https://www.w3.org/TR/navigation-timing/). Use this space to determine the average time to first byte of a page load and drill into any AJAX and JS Errors that may contribute to slow load times.\"\n        }],\n        \"presentation\": {\n          \"title\": \"\",\n          \"notes\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"from BrowserInteraction select average(timeToDomComplete), average(timeToDomContentLoadedEventEnd), average(timeToDomInteractive), average(duration)  where trigger = 'initialPageLoad' limit 1000 TIMESERIES\"\n        }],\n        \"presentation\": {\n          \"title\": \"Average Stats\",\n          \"notes\": \"Displays the average load times for specific elements of the Navigation Timing API over time\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 2\n        },\n        \"data\": [{\n          \"nrql\": \"SELECT average(timeToDomComplete - timeToDomLoading) AS 'Time to Render' FROM BrowserInteraction SINCE 1 week ago TIMESERIES facet appName\"\n        }],\n        \"presentation\": {\n          \"title\": \"Average Time to Render\",\n          \"notes\": \"Displays average time until the page renders over time\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 3\n        },\n        \"data\": [{\n          \"nrql\": \"SELECT average(timeToResponseStart) FROM BrowserInteraction since 1 week ago TIMESERIES\"\n        }],\n        \"presentation\": {\n          \"title\": \"TTFB\",\n          \"notes\": \"Displays average time until the browser receives the first byte response from the web server over time\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"from BrowserInteraction select average(timeToDomComplete) as 'Dom Complete', average(timeToDomContentLoadedEventEnd) as 'Dom Content Loaded' , average(timeToDomInteractive) as 'Dom Content Interactive', average(duration) as 'Total Duration of Interaction Event', average(timeToDomComplete - timeToDomLoading) AS 'Time to Render', average(timeToResponseStart) as 'Time to First Bite'  where trigger = 'initialPageLoad' limit 1000 TIMESERIES\"\n        }],\n        \"presentation\": {\n          \"title\": \"Average Page Load Details\",\n          \"notes\": \"This chart adds to the first chart with more page load statistics\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 3\n        },\n        \"data\": [{\n          \"nrql\": \"SELECT average(timeToDomComplete - timeToDomLoading) AS 'Time to Render', average(timeToResponseStart) as 'Time to First Bite' FROM BrowserInteraction SINCE 1 week ago TIMESERIES 2 hours\"\n        }],\n        \"presentation\": {\n          \"title\": \"Time to Render + First Byte\",\n          \"notes\": \"This chart combines the 2nd and 3rd queries into a single line chart\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"SELECT count(*) FROM PageView facet appName\"\n        }],\n        \"presentation\": {\n          \"title\": \"Page Views (App Filter)\",\n          \"notes\": \"Counts the total number of page views listed per app (facetable)\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"attribute_sheet\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 2\n        },\n        \"data\": [{\n          \"nrql\": \"from PageView select count(*), average(duration) as 'Avg Pg Load', average(backendDuration) as 'Avg Back End', average(domProcessingDuration) + average(pageRenderingDuration) as 'Avg Front End'\"\n        }],\n        \"presentation\": {\n          \"title\": \"Throughput & Response Times\",\n          \"notes\": \"Provides the total number of page views, average page load duration, average backend duration (web app time), and front end duration (page load timing)\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"from BrowserInteraction select average(duration) facet targetUrl\"\n        }],\n        \"presentation\": {\n          \"title\": \"Slow Load Interactions\",\n          \"notes\": \"Highlights the slowest browser interactions faceted by the URL\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"billboard\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 6,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"select filter(count(*), WHERE httpResponseCode >= 300) / count(*) * 100 as 'Error Rate (%)' FROM AjaxRequest\"\n        }],\n        \"presentation\": {\n          \"title\": \"AJAX Error Rate\",\n          \"notes\": \"Provides a percentage of AJAX errors\",\n          \"threshold\": {}\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 6,\n          \"column\": 2\n        },\n        \"data\": [{\n          \"nrql\": \"SELECT count(*) from AjaxRequest where httpResponseCode >= 300 facet appName, pageUrl, httpResponseCode limit 100\"\n        }],\n        \"presentation\": {\n          \"title\": \"AJAX App/Page Issues\",\n          \"notes\": \"Highlights where the AJAX errors are occurring in your app faceted by appName and pageUrl\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 6,\n          \"column\": 3\n        },\n        \"data\": [{\n          \"nrql\": \"SELECT count(*) from AjaxRequest facet cases(WHERE httpResponseCode >= 200 and httpResponseCode < 300 as '200s', WHERE httpResponseCode >= 300 and httpResponseCode < 400 as '300s', WHERE httpResponseCode >= 400 and httpResponseCode < 500 as '400s', WHERE httpResponseCode >= 500 and httpResponseCode < 600 as '500s')\"\n        }],\n        \"presentation\": {\n          \"title\": \"AJAX Errors\",\n          \"notes\": \"Counts the number of AJAX Errors faceted out by httpResponseCode\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 7,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"select filter(count(*), WHERE httpResponseCode >= 300) / filter(count(*),WHERE httpResponseCode < 300) as 'Error Rate' FROM AjaxRequest TIMESERIES\"\n        }],\n        \"presentation\": {\n          \"title\": \"AJAX Errors Over Time\",\n          \"notes\": \"Displays the number of AJAX Errors over time\"\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 7,\n          \"column\": 2\n        },\n        \"data\": [{\n          \"nrql\": \"from AjaxRequest select count(*) where httpResponseCode > 300 facet pageUrl  limit 5\"\n        }],\n        \"presentation\": {\n          \"title\": \"Top 5 AJAX Errors by Page URL\",\n          \"notes\": \"Highlights the top 5 pageURLs with the highest number of AJAX errors\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 8,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"FROM JavaScriptError select count(*) facet errorClass, errorMessage\"\n        }],\n        \"presentation\": {\n          \"title\": \"JS Error Details\",\n          \"notes\": \"Provides the top JS errors and the error message and class associated with them\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"account_id\": {{account_id}},\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 9,\n          \"column\": 1\n        },\n        \"data\": [{\n          \"nrql\": \"FROM JavaScriptError select count(*) facet requestUri\"\n        }],\n        \"presentation\": {\n          \"title\": \"JS Errors by Request URI\",\n          \"notes\": \"Highlights the number of JS Errors faceted by requestUri\",\n          \"drilldown_dashboard_id\": null\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"PageView\",\n        \"BrowserInteraction\",\n        \"AjaxRequest\",\n        \"JavaScriptError\"\n      ],\n      \"attributes\": []\n    }\n  }\n}\n"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference: [All Widget Typse](https://discuss.newrelic.com/t/intro-dashboard-all-widget-chart-types/60663)"
+					},
+					"response": []
+				}
+			],
+			"description": "These are the dashboards that are part of the developer program shared dashboard contest. \n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "14763919-ce6e-4b0c-bd9d-58dee434cd39",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7925f077-d967-425d-92a5-8c2bd72582ef",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Shared Dashboards",
+			"item": [
+				{
+					"name": "Browser Users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"id\": 673054,\n    \"title\": \"Browser Users Dashboard\",\n    \"description\": null,\n    \"icon\": \"users\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"widget_id\": 6162472,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView since 1 day ago FACET  appName\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Total Recent Page Views\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"faceted_area_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 2\n        },\n        \"widget_id\": 6287540,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration) FROM PageView  since 1 day ago  FACET appName TIMESERIES\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Recent Average Response Time\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 3\n        },\n        \"widget_id\": 6287542,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration) as ' End User Time', average(backendDuration) as ' App Server Time ' FROM PageView SINCE 1 day ago  TIMESERIES\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Recent End User & App Server Performance\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 1\n        },\n        \"widget_id\": 6287560,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView FACET weekDayOf(timestamp)  since 7 day ago  limit 7\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Weekly Page Views By Day\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 2\n        },\n        \"widget_id\": 6287641,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView FACET hourof(timestamp) SINCE 24 hours ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Daily Page Views By Hour\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 3\n        },\n        \"widget_id\": 6287654,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView since 1 days ago FACET pageUrl limit 25\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Most Frequently Viewed Pages\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"widget_id\": 6162477,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration) FROM PageView since 1 day ago FACET pageUrl TIMESERIES AUTO\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Slowest Page Load Times\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 2\n        },\n        \"widget_id\": 6210250,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration) from PageView since 7 day ago FACET pageUrl\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Slowest Pages\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"histogram\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 3\n        },\n        \"widget_id\": 6287734,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(duration, 10, 30) FROM PageView SINCE 1 day ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Page Load Time - Histogram\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"widget_id\": 6162469,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView SINCE 1 day ago FACET countryCode\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Customers by Country\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 2\n        },\n        \"widget_id\": 6162471,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView since 1 day ago FACET  city\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"What Cities Are My Users In?\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      },\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 3\n        },\n        \"widget_id\": 6287762,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView since 1 days ago facet userAgentName, userAgentOS\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Browser and OS Usage\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"visualization\": \"attribute_sheet\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 1\n        },\n        \"widget_id\": 6207798,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT percentage(uniqueCount(session), WHERE userAgentName = 'IE') AS '% of IE Users', percentage(uniqueCount(session), WHERE userAgentName = 'Chrome') AS '% of Chrome Users', percentage(uniqueCount(session), WHERE userAgentName = 'Firefox') AS '% of Firefox Users', percentage(uniqueCount(session), WHERE userAgentName = 'Safari') AS '% of Safari Users' FROM PageView SINCE 1 day ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Browser Usage %'s\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 3\n        },\n        \"widget_id\": 6207389,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration) FROM PageView FACET asnOrganization SINCE 1 day ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Slowest ASN's\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 673054\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"PageView\"\n      ],\n      \"attributes\": []\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference [Browser Users](https://discuss.newrelic.com/t/relic-solution-insights-dashboard-for-browser-part-1-users/57961)"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajax Requests",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"id\": 704417,\n    \"title\": \"Browser Ajax Dashboard\",\n    \"description\": null,\n    \"icon\": \"bar-chart\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [\n      {\n        \"visualization\": \"billboard\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"widget_id\": 6541278,\n        \"data\": [\n          {\n            \"nrql\": \"select count(*) from AjaxRequest SINCE 60 minutes ago WHERE httpResponseCode not in ('200','201')\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Total count Ajax Requests\",\n          \"notes\": null,\n          \"threshold\": {}\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 2\n        },\n        \"widget_id\": 6541279,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) from AjaxRequest SINCE 60 minutes ago FACET `nr.interaction.category`\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"The type of Interaction\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 704404\n        }\n      },\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 3\n        },\n        \"widget_id\": 6541280,\n        \"data\": [\n          {\n            \"nrql\": \"select count(*) from AjaxRequest SINCE 60 minutes ago WHERE httpResponseCode not in ('200','201') facet httpMethod\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"HTTP method of AJAX request.\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 704404\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 1\n        },\n        \"widget_id\": 6541281,\n        \"data\": [\n          {\n            \"nrql\": \"select count(*) from AjaxRequest SINCE 60 minutes ago WHERE httpResponseCode not in ('200','201') facet hostname\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Fully qualified domain name\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 704404\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 2\n        },\n        \"widget_id\": 6541282,\n        \"data\": [\n          {\n            \"nrql\": \"select count(*) from AjaxRequest SINCE 60 minutes ago WHERE httpResponseCode not in ('200','201') facet browserInteractionName\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Interactions receiving errors\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 668852\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 3\n        },\n        \"widget_id\": 6541283,\n        \"data\": [\n          {\n            \"nrql\": \"select count(*) from AjaxRequest SINCE today WHERE httpResponseCode not in ('200','201') facet `nr.interaction.backendTransactionName`\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Backend transactions\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 668852\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"widget_id\": 6541284,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average( timeToSettle ) from AjaxRequest facet pageUrl\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"AJAX avg duration by page\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 668852\n        }\n      },\n      {\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 2\n        },\n        \"widget_id\": 6541285,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) as 'AJAX Calls',average(timeToLoadEventStart) as 'Load Event Start',average(timeToLastCallbackEnd) as 'Last Callback End',average(timeToSettle) as 'Time to Settle'  FROM AjaxRequest FACET `nr.nameForFaceting` SINCE 60 minutes  ago LIMIT 20\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Pageview Performance Breakdown\",\n          \"notes\": \"ast Callback End: Time from the start of the request to the end of the last callback to finish\\nLoad event start: Time from the start of the request to the start of the load event\\nTime to Settle: Time from the start of the request to the end of all callbk\",\n          \"drilldown_dashboard_id\": 668852\n        }\n      },\n      {\n        \"visualization\": \"line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 3\n        },\n        \"widget_id\": 6541286,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration), percentile(duration,50) as 'Median', percentile(duration,75) FROM BrowserInteraction  SINCE 60 minutes ago TIMESERIES\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Interaction Duration\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"widget_id\": 6541287,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM AjaxRequest FACET httpResponseCode, hostname\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Http Response by hostname\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 2\n        },\n        \"widget_id\": 6541288,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM AjaxRequest TIMESERIES AUTO  FACET httpResponseCode, hostname\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Response code by requested host\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 3\n        },\n        \"widget_id\": 6541289,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM AjaxRequest FACET hostname SINCE 60 minutes ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"AJAX Requests by Domain\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 668852\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 1\n        },\n        \"widget_id\": 6541290,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(jsDuration) FROM AjaxRequest FACET hostname SINCE 60 minutes ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Avg JS Duration by Domain\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 668852\n        }\n      },\n      {\n        \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 2\n        },\n        \"widget_id\": 6541291,\n\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(jsDuration, 10, 20) FROM AjaxRequest FACET hostname SINCE 1 day ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Duration by Domain Heatmap\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 3\n        },\n        \"widget_id\": 6541292,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(httpMethod) FROM AjaxRequest FACET httpMethod SINCE 1 day ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Request Types\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 668852\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"AjaxRequest\"\n      ],\n      \"attributes\": []\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference [Ajax Requets](https://discuss.newrelic.com/t/relic-solution-insights-dashboard-for-browser-part-3-ajax-request/57963)"
+					},
+					"response": []
+				},
+				{
+					"name": "JS Errors",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"id\": 668824,\n    \"title\": \"JS Errors Dashboard\",\n    \"description\": null,\n    \"icon\": \"bar-chart\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"widget_id\": 6110641,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) from JavaScriptError FACET errorClass\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by Error Class\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 539020\n        }\n      },\n      {\n        \"visualization\": \"comparison_line_chart\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 2\n        },\n        \"widget_id\": 6110642,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) from JavaScriptError TIMESERIES AUTO compare with 1 week ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors compared with past JS error trends\",\n          \"notes\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 1\n        },\n        \"widget_id\": 6110643,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) from JavaScriptError FACET appName\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by App Name\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 396548\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 2\n        },\n        \"widget_id\": 6110644,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) from JavaScriptError FACET errorMessage\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by Error Message\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 396548\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 3\n        },\n        \"widget_id\": 6110645,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM JavaScriptError FACET releaseIds\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by Release ID's\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 396548\n        }\n      },\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"widget_id\": 6110646,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM JavaScriptError FACET userAgentName\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by Browser\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_pie_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 2\n        },\n        \"widget_id\": 6110647,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM JavaScriptError FACET userAgentOS\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by OS\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 3\n        },\n        \"widget_id\": 6110648,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM JavaScriptError FACET deviceType\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by Device Type\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 539020\n        }\n      },\n      {\n        \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"widget_id\": 6110649,\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM JavaScriptError FACET requestUri\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"JS Errors by Request URI\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 396548\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"JavaScriptError\"\n      ],\n      \"attributes\": []\n    }\n  }\n}\n"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference [JS Errors](https://discuss.newrelic.com/t/relic-solution-insights-dashboard-for-browser-part-2-js-errors/57962)"
+					},
+					"response": []
+				}
+			],
+			"description": "Dashboards you may find fun and useful",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f834ef74-63d4-4b0c-96bb-3d28ef19c276",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8519c262-697d-4850-a1f2-0e17f877d7a3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Get a list of your dashboards",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.newrelic.com/v2/dashboards.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"newrelic",
+						"com"
+					],
+					"path": [
+						"v2",
+						"dashboards.json"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific dashboard definition",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"type": "text",
+						"value": "{{apikey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.newrelic.com/v2/dashboards/{{dashboard_id}}.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"newrelic",
+						"com"
+					],
+					"path": [
+						"v2",
+						"dashboards",
+						"{{dashboard_id}}.json"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a5d89ce0-d551-4ace-a1cd-d9386b398a91",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "26def575-b62e-450c-b256-6228b8a6d26d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
