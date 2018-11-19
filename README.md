@@ -1,5 +1,5 @@
 # New Relic Shared Dashboards
-Whether it’s to ensure customers apps are running smoothly, or tracking the velocity of deployments, dashboards tell the story of your business. We want to make it easy for New Relic developers to learn from each other and share their dashboards. We've created a topic in our community to discuss best practices, new ideas, and answer any questions you have about getting more from you data! 
+Whether it’s to ensure customers apps are running smoothly, or tracking the velocity of deployments, dashboards tell the story of your business. We want to make it easy for New Relic developers to learn from each other and share their dashboards. We've created a topic in our community to discuss best practices, new ideas, and answer any questions you have about getting more from your data! 
 
 > ### Share The Dashboard Love -- You Could Win an Apple Watch!
 > We want to spread the dashboard love by encouraging you to share the chart queries and dashboards that tell that story. On November 26th, 2018, New Relic will kick off our [Shared Dashboards contest!](https://discuss.newrelic.com/t/shared-dashboards-contest-add-your-queries-here/60634) You’ll have two weeks to share your most useful queries, Insights charts, and your most awesome dashboards.
@@ -13,7 +13,7 @@ Note: It's not uncommon for dashboards to rely on things specific to an environm
 
 ## Contributing Your Own Dashboards
 It would be awesome if you would share your dashboards with other New Relic developers. You can do this in a number of ways.
-* Create a new shared dashboard discussion in the community [here](https://discuss.newrelic.com/c/build-on-new-relic/shared-dashboards). *Note: If you do this between November 26th and December 9th 2018, you could be eligable to win an Apple watch*
+* Create a new shared dashboard discussion in the community [here](https://discuss.newrelic.com/c/build-on-new-relic/shared-dashboards). *Note: If you do this between November 26th and December 9th 2018, you could be eligible to win an Apple watch*
 * Update the Postman collection and issue a pull request. 
 
 Let us know if you have any thoughts or ideas. We welcome all your feedback and hope you find these dashboards useful. 
