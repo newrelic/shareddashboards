@@ -45,6 +45,43 @@
 						"description": "Please reference: [All Widget Typse](https://discuss.newrelic.com/t/intro-dashboard-all-widget-chart-types/60663)"
 					},
 					"response": []
+				},
+				{
+					"name": "Cloud Container Health",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"title\": \"Cloud Container Health\",\n    \"description\": null,\n    \"icon\": \"bar-chart\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"markdown\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"source\": \"# Motivation\\n---\\nMonitoring the overall health of your application can be difficult when it comes to dynamically changing environments. This dashboard will clear up any doubt when it comes to the health of your containers.\\n\\nhttps://discuss.newrelic.com/t/infrastructure-dashboard-cloud-container-health/61053\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"\",\n          \"notes\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(cpuPercent) AS 'Average CPU percentage' FROM ProcessSample facet containerImageName SINCE today\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"CPU by Image Name\",\n          \"notes\": \"Displays the average CPU Percent faceted by containerImageName\",\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(cpuPercent) FROM ProcessSample TIMESERIES FACET `containerImageName`  LIMIT 100 SINCE today\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"CPU by ImageName\",\n          \"notes\": \"Displays the average CPU Percent of containerImageName over time\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(memoryVirtualSizeBytes)  FROM ProcessSample TIMESERIES FACET containerName LIMIT 100 SINCE today\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Virtual Memory by Container Name\",\n          \"notes\": \"Displays the average Virtual Memory over time faceted by `containerName\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT uniqueCount(containerId) FROM ProcessSample FACET containerImageName SINCE today TIMESERIES\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Containers per Image\",\n          \"notes\": \"Displays the unique number of containers over time faceted by containerImageName\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_area_chart\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(cpuPercent) FROM ProcessSample  TIMESERIES facet containerImageName LIMIT 100\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"CPU by Container\",\n          \"notes\": \"Displays the average CPU Percent faceted by containerImageName\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(memoryVirtualSizeBytes) FROM ProcessSample TIMESERIES FACET `entityAndPid`  LIMIT 100 SINCE today\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Virtual Memory by Contained Processes\",\n          \"notes\": \"Displays the average virtual memory over time faceted by contained process (entityAndPid)\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(threadCount) FROM ProcessSample  TIMESERIES facet `containerLabel_io.kubernetes.container.name`\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Thread Count by Kubernetes Container Name\",\n          \"notes\": \"Displays the average thread count over time faceted by Kubernetes Container Name\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 6,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(cpuPercent) FROM ProcessSample  TIMESERIES facet ec2InstanceId since today\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"CPU usage by EC2 Instance ID\",\n          \"notes\": \"Displays the Average CPU Percent over time faceted by EC2 Instance ID\"\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 7,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(memoryResidentSizeBytes) FROM ProcessSample TIMESERIES FACET `containerImageName`  LIMIT 100 SINCE today\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Resident Memory by Image\",\n          \"notes\": \"Displays the average residual memory over time faceted by the Container Image Name\"\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"ProcessSample\"\n      ],\n      \"attributes\": []\n    }\n  }\n}\n"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference [Cloud Container Health](https://discuss.newrelic.com/t/infrastructure-dashboard-cloud-container-health/61053)"
+					},
+					"response": []
 				}
 			],
 			"description": "These are the dashboards that are part of the developer program shared dashboard contest. \n",
