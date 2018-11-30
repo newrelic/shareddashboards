@@ -119,6 +119,43 @@
 						"description": "Please reference [Domain Knowledge DevOps](https://discuss.newrelic.com/t/devops-dashboard-domain-knowledge/61717)"
 					},
 					"response": []
+				},
+				{
+					"name": "APM Database Offenders",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"title\": \"APM Database Offenders\",\n    \"description\": null,\n    \"icon\": \"bar-chart\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 2,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT sum(databaseDuration) as 'Time', count(*) as 'Count', percentile(databaseDuration, 99, 80, 50) as 'DB' FROM Transaction FACET name SINCE 1 day ago LIMIT 15\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Worst DB offenders\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": 763242\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 2,\n          \"row\": 1,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT sum(databaseDuration) FROM Transaction FACET name SINCE 1 day ago LIMIT 20\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Accumulated DB Time by Trans.\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"faceted_line_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT max(databaseDuration) as 'DB' FROM Transaction FACET name SINCE 1 day ago LIMIT 15 TIMESERIES\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Max DB Duration\",\n          \"notes\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT max(databaseDuration) as 'DB' FROM Transaction FACET name SINCE 1 day ago LIMIT 15\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Max DB Duration\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_table\",\n        \"layout\": {\n          \"width\": 2,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT sum(duration) as 'App', count(*) as 'Count', percentile(duration, 99, 80, 50) as 'App' FROM Transaction FACET name SINCE 1 day ago LIMIT 5\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Worst App offenders\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT sum(duration) FROM Transaction FACET name SINCE 1 day ago LIMIT 7\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Transaction Time (DB inclusive)\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 3,\n          \"height\": 1,\n          \"row\": 5,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(databaseDuration) FROM Transaction FACET name SINCE 1 day ago LIMIT 20\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Accumulated DB Time by Histogram\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"Transaction\"\n      ],\n      \"attributes\": []\n    }\n  }\n}\n"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference [APM Database Offenders](https://discuss.newrelic.com/t/apm-dashboard-database-offenders/61049)"
+					},
+					"response": []
 				}
 			],
 			"description": "These are the dashboards that are part of the developer program shared dashboard contest. \n",
