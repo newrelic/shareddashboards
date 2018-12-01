@@ -12,10 +12,15 @@ Open Postman and click on the "Import". This will open up a dialog box with seve
 <sub>For more information, please refer to the [Postman documentation on importing collections](https://www.getpostman.com/docs/v6/postman/collections/data_formats)</sub>
 
 ### Step 2: Create a Postman Environment
-Each New Relic API request must pass an authorization key as part of the header. In addition, other requests will take parameters, e.g. dashboard_id, as part of the URL. Postman uses the notion of an "environment" to manage the variables that will be used in requests. To use the Shared Dashboard collection, you will need two environment variables, **apikey** and **dashbaord_id**.
->Note: You can find your API key in New Relic by going into the "Account Settings" menu, then selecting "API Keys" under the "Integrations" heading on the left hand side.
+Each New Relic API request must pass an authorization key as part of the header. In addition, other requests will take parameters, e.g. dashboard_id, as part of the URL. Postman uses the notion of an "environment" to manage the variables that will be used in requests. To use the Shared Dashboard collection, you will need the following environment variables:
 
-Create the enviornment from the upper right hand corner "gear" icon. This will open the "Add Environment" dialog box. In the "VARIABLE" column, add the **apikey** variable and then paste in your key. Create another variable, **dashboard_id**, but leave its value empty.
+|Variable Name        | Description|
+|:------------- |:-------------|
+|**apikey**      | The API key is what's used to determine access to New Relic data. It's passed on the header of each request.</p><sup> Note: You can find your API key in New Relic by going into the "Account Settings" menu, then selecting "API Keys" under the "Integrations" heading on the left hand side.</sup>      |
+| **appName**      | This variable is used in queries and represents the name that you have given to your applications.       |
+| **dashbaord_id**| Once a dashboard is created, it is given a unique ID within the instance. This is the number that is at the end of the URL when you are viewing a specific dashboard. |
+
+Create the environment from the upper right hand corner "gear" icon. This will open the "Add Environment" dialog box. In the "VARIABLE" column, add the **apikey** variable and then paste in your key. Create another variable, **dashboard_id**, but leave its value empty.
 
 Next, you will name your environment. In the screen capture below, we use the name *New Relic Developer*, but choose the name of your choice.
 Click the "Add" button to create the environment, then the "X" on the top right of the dialog to close it.

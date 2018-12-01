@@ -332,6 +332,43 @@
 						"description": "Please reference [JS Errors](https://discuss.newrelic.com/t/relic-solution-insights-dashboard-for-browser-part-2-js-errors/57962)"
 					},
 					"response": []
+				},
+				{
+					"name": "Apps, Pages, & Hosts",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"value": "{{apikey}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"dashboard\":{\n  \"metadata\": { \"version\": 1 },\n  \"title\": \"DEMO: A - Insights Home\",\n  \"icon\": \"bar-chart\",\n  \"visibility\": \"all\",\n  \"editable\": \"editable_by_all\",\n  \"filter\": {\n    \"event_types\": [ \"PageView\", \"Transaction\", \"personatron\" ],\n    \"filter_first\": false,\n    \"description\": {\n      \"plural\": \"\",\n      \"singular\": \"\"\n    },\n    \"escaped_event_types\": \"`PageView`, `Transaction`, `personatron`\"\n  },\n  \"widgets\": [\n    {\n      \"visualization\": \"billboard\",\n      \"data\": [ { \"nrql\": \"SELECT count(*) FROM PageView FACET appName SINCE 1 day ago TIMESERIES AUTO\" } ],\n      \"presentation\": {\n        \"title\": \"Pageviews per App\",\n        \"notes\": null\n      },\n      \"layout\": {\n        \"width\": 1,\n        \"height\": 1,\n        \"row\": 1,\n        \"column\": 1\n      }\n    }\n  ]\n}\n}"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "One of the entries from our Shared Dashboard contest!\n\nThe objective was to show overall performance of all of our sites with easily discernible attributes; and be filterable to the individual APM application level.\n\nIt’s a bit of a hodgepodge of metrics, but shows several key areas that were requested to be highly visible to anyone that looks at the TVs.\nSee: https://discuss.newrelic.com/t/shared-dashboards-contest-add-your-queries-here/60634/6"
+					},
+					"response": []
 				}
 			],
 			"description": "Dashboards you may find fun and useful",
