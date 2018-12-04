@@ -230,6 +230,43 @@
 						"description": "Please reference [Time to First Byte](https://discuss.newrelic.com/t/browser-dashboard-time-to-first-byte-ttfb/61579)"
 					},
 					"response": []
+				},
+				{
+					"name": "Front to Back in Realtime",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-api-key",
+								"type": "text",
+								"value": "{{apikey}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dashboard\": {\n    \"title\": \"Front and Back End Real Time Comparison\",\n    \"description\": null,\n    \"icon\": \"bar-chart\",\n    \"visibility\": \"all\",\n    \"editable\": \"editable_by_all\",\n    \"metadata\": {\n      \"version\": 1\n    },\n    \"widgets\": [\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"gauge\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT uniqueCount(host) FROM Transaction since 1 day ago LIMIT 200\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Peak usage\",\n          \"notes\": null,\n          \"threshold\": {\n            \"red\": 458\n          }\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"gauge\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT uniqueCount(host) FROM Transaction since 1 minute ago LIMIT 200\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Hosts\",\n          \"notes\": null,\n          \"threshold\": {\n            \"red\": 34\n          }\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 1,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM Transaction since 1 minute ago FACET host LIMIT 100\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Transactions by host\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"gauge\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) FROM PageView SINCE 1 minute ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Page Views\",\n          \"notes\": null,\n          \"threshold\": {\n            \"red\": 172834\n          }\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"gauge\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT uniqueCount(session) FROM PageView SINCE 1 minute ago\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Sessions\",\n          \"notes\": null,\n          \"threshold\": {\n            \"red\": 28\n          }\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 2,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT average(duration) FROM PageView SINCE 1 minute ago facet userAgentName limit 50\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Average page load\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"facet_bar_chart\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT count(*) from PageView SINCE 1 minute ago FACET pageUrl LIMIT 50\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Pages\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(databaseDuration) FROM Transaction FACET name SINCE 1 minute ago LIMIT 100\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Backend\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 3,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(duration, 10, 50) FROM PageView SINCE 1 minute ago FACET browserTransactionName LIMIT 10\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Frontend\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 1\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(duration, 10, 50) FROM PageView SINCE 1 minute ago FACET countryCode Limit 50\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Countries\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 2\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(duration, 10, 50) FROM PageView SINCE 1 minute ago FACET city Limit 50\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Cities\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      },\n      {\n      \"account_id\":{{account_id}},\n      \"visualization\": \"heatmap\",\n        \"layout\": {\n          \"width\": 1,\n          \"height\": 1,\n          \"row\": 4,\n          \"column\": 3\n        },\n        \"data\": [\n          {\n            \"nrql\": \"SELECT histogram(duration, 10, 50) FROM PageView SINCE 1 minute ago FACET userAgentOS Limit 50\"\n          }\n        ],\n        \"presentation\": {\n          \"title\": \"Platforms\",\n          \"notes\": null,\n          \"drilldown_dashboard_id\": null\n        }\n      }\n    ],\n    \"filter\": {\n      \"event_types\": [\n        \"Transaction\"\n      ],\n      \"attributes\": []\n    }\n  }\n}\n"
+						},
+						"url": {
+							"raw": "https://api.newrelic.com/v2/dashboards.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"newrelic",
+								"com"
+							],
+							"path": [
+								"v2",
+								"dashboards.json"
+							]
+						},
+						"description": "Please reference [Front to Back in Realtime](https://discuss.newrelic.com/t/front-to-back-in-real-time-apm-and-browser-dashboard/61709)"
+					},
+					"response": []
 				}
 			],
 			"description": "These are the dashboards that are part of the developer program shared dashboard contest. \n",
