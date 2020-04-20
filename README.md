@@ -1,3 +1,5 @@
+[![Archived header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Archived.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#archived)
+
 # New Relic Shared Dashboards
 Whether it’s to ensure customers apps are running smoothly, or tracking the velocity of deployments, dashboards tell the story of your business. We want to make it easy for New Relic developers to learn from each other and share their dashboards. We've created a topic in our community to discuss best practices, new ideas, and answer any questions you have about getting more from your data! 
 
